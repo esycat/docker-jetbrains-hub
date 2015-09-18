@@ -12,6 +12,10 @@ Pull the image, create a new container and start it:
 
 ```bash
 docker pull esycat/jetbrains-hub
-docker create --name jetbrains-hub -p 8080:8080 esycat/jetbrains-hub
-docker start jetbrains-hub
+docker run -d \
+	--name jetbrains-hub  \
+	-p 8080:8080 \
+	--restart=always \
+	-v HOST/DIR:/data
+	esycat/jetbrains-hub
 ```

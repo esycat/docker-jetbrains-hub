@@ -1,6 +1,6 @@
 FROM java:latest
 
-MAINTAINER Seti <seti@setadesign.net>
+MAINTAINER "Eugene Janusov" <esycat@gmail.com>
 
 ENV APP_VERSION 1.0
 ENV APP_BUILD $APP_VERSION.583
