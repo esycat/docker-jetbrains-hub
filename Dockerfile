@@ -4,7 +4,7 @@ MAINTAINER Seti <seti@setadesign.net>
 
 ENV APP_VERSION 1.0
 ENV APP_BUILD $APP_VERSION.583
-ENV APP_HOME /var/lib/hub
+ENV APP_HOME /data
 
 
 RUN curl -L https://download.jetbrains.com/hub/$APP_VERSION/hub-ring-bundle-$APP_BUILD.zip -o /opt/hub.zip && \
@@ -21,6 +21,6 @@ WORKDIR /opt/hub
 ADD run.sh /opt/hub/
 RUN chmod o+rx run.sh
 USER hub
-ENTRYPOINT ["run.sh"]
+ENTRYPOINT ["/opt/hub/run.sh"]
 EXPOSE 8080
 VOLUME ["$APP_HOME"]
