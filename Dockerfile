@@ -1,9 +1,9 @@
-FROM esycat/java:oracle-8
+FROM java:latest
 
-MAINTAINER "Eugene Janusov" <esycat@gmail.com>
+MAINTAINER Seti <seti@setadesign.net>
 
 ENV APP_VERSION 1.0
-ENV APP_BUILD ${APP_VERSION}.529
+ENV APP_BUILD ${APP_VERSION}.583
 ENV APP_PORT 8080
 ENV APP_USER hub
 ENV APP_SUFFIX hub
@@ -14,33 +14,19 @@ ENV APP_DIR $APP_PREFIX/$APP_SUFFIX
 ENV APP_HOME /var/lib/$APP_SUFFIX
 
 # downloading and unpacking the distribution
-WORKDIR $APP_PREFIX
-ADD https://download.jetbrains.com/hub/$APP_VERSION/$APP_DISTFILE $APP_PREFIX/
-# COPY $APP_DISTFILE $APP_PREFIX/
-RUN unzip $APP_DISTFILE -d $APP_DIR
-RUN rm $APP_DISTFILE
+RUN curl -L https://download.jetbrains.com/hub/$APP_VERSION/$APP_DISTFILE -o $APP_PREFIX/$APP_DISTFILE \
+	unzip $APP_DISTFILE -d $APP_DIR \
+	rm -f $APP_DISTFILE \
+	rm -rf $APP_DIR/internal/java \
+	mkdir $APP_HOME \
+	groupadd -r $APP_USER \
+	useradd -r -g $APP_USER -u 1000 -d $APP_HOME $APP_USER \
+	chown -R $APP_USER:$APP_USER $APP_HOME $APP_DIR
 
-# removing bundled JVMs
-RUN rm -rf $APP_DIR/internal/java
-
-# preparing home (data) directory and user+group
-RUN mkdir $APP_HOME
-RUN groupadd -r $APP_USER
-RUN useradd -r -g $APP_USER -d $APP_HOME $APP_USER
-RUN chown -R $APP_USER:$APP_USER $APP_HOME $APP_DIR
-
-USER $APP_USER
 WORKDIR $APP_DIR
-
-RUN bin/hub.sh configure \
-    --backups-dir $APP_HOME/backups \
-    --data-dir    $APP_HOME/data \
-    --logs-dir    $APP_HOME/log \
-    --temp-dir    $APP_HOME/tmp \
-    --listen-port $APP_PORT \
-    --base-url    http://localhost/
-
-ENTRYPOINT ["bin/hub.sh"]
-CMD ["run"]
+ADD run.sh
+RUN chmod o+rx run.sh
+USER $APP_USER
+ENTRYPOINT ["run.sh"]
 EXPOSE $APP_PORT
 VOLUME ["$APP_HOME"]
