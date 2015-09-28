@@ -15,13 +15,10 @@ ENV APP_HOME /var/lib/$APP_SUFFIX
 
 # downloading and unpacking the distribution
 WORKDIR $APP_PREFIX
-ADD https://download.jetbrains.com/hub/$APP_VERSION/$APP_DISTFILE $APP_PREFIX/
-# COPY $APP_DISTFILE $APP_PREFIX/
-RUN unzip $APP_DISTFILE -d $APP_DIR
-RUN rm $APP_DISTFILE
-
-# removing bundled JVMs
-RUN rm -rf $APP_DIR/internal/java
+RUN wget -q https://download.jetbrains.com/hub/$APP_VERSION/$APP_DISTFILE && \
+    unzip -q $APP_DISTFILE -d $APP_DIR && \
+    rm $APP_DISTFILE && \
+    rm -rf $APP_DIR/internal/java # removing bundled JVMs
 
 # preparing home (data) directory and user+group
 RUN mkdir $APP_HOME
