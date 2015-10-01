@@ -22,5 +22,5 @@ ADD run.sh /opt/hub/
 RUN chmod o+rx run.sh
 USER hub
 ENTRYPOINT ["/opt/hub/run.sh"]
-EXPOSE 80
+EXPOSE 8080
 VOLUME ["$APP_HOME"]

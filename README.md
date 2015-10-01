@@ -12,9 +12,10 @@ DIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
 mkdir $DIR/data
 chown 1000:1000 $DIR/data
 docker run -d \
-	-m 1g \
+	-m 2g \
+	-e BASE_URL=[your URL] \
 	--name $NAME  \
-	-p 80:80 \
+	-p 8080:8080 \
 	--restart=always \
 	-v $DIR/data:/data
 	seti/jetbrains-hub

@@ -10,8 +10,8 @@ then
 		--data-dir    $APP_HOME/data \
 		--logs-dir    $APP_HOME/log \
 		--temp-dir    $APP_HOME/tmp \
-		--listen-port 80 \
-		--base-url    http://localhost/
+		--listen-port 8080 \
+		--base-url    http://$BASE_URL/
 else
 	rm -rf /opt/hub/conf
 	ln -s $APP_HOME/conf /opt/hub/conf
