@@ -7,7 +7,7 @@ ENV APP_BUILD $APP_VERSION.797
 ENV APP_HOME /data
 
 
-RUN curl -L https://download.jetbrains.com/hub/$APP_VERSION/hub-ring-bundle-$APP_BUILD.zip -o /opt/hub.zip && \
+RUN curl --insecure -L https://download.jetbrains.com/hub/$APP_VERSION/hub-ring-bundle-$APP_BUILD.zip -o /opt/hub.zip && \
 	mkdir /opt/hub -p && cd /opt/hub/ && \
 	unzip /opt/hub.zip && \
 	rm -f /opt/hub.zip && \
