@@ -1,15 +1,16 @@
 FROM java:latest
 
-MAINTAINER "Eugene Janusov" <esycat@gmail.com>
+MAINTAINER "Seti" <seti@setadesign.net>
 
 ENV APP_VERSION 2.0
 ENV APP_BUILD $APP_VERSION.100
 ENV APP_HOME /data
 
 
-RUN curl -L https://download.jetbrains.com/hub/$APP_VERSION/hub-ring-bundle-$APP_BUILD.zip -o /opt/hub.zip && \
-	mkdir /opt/hub -p && cd /opt/hub/ && \
+RUN curl -k -L https://download.jetbrains.com/hub/$APP_VERSION/hub-ring-bundle-$APP_BUILD.zip -o /opt/hub.zip && \
+	cd /opt && \
 	unzip /opt/hub.zip && \
+	mv hub-ring-bundle-$APP_BUILD hub && \
 	rm -f /opt/hub.zip && \
 	rm -rf /opt/hub/internal/java && \
 	mkdir $APP_HOME && \
