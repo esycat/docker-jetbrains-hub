@@ -1,10 +1,11 @@
-FROM esycat/java:oracle-8
+FROM esycat:alpine-openjre
 
 MAINTAINER "Eugene Janusov" <esycat@gmail.com>
 
 ENV APP_VERSION 2.5
 ENV APP_BUILD 399
 ENV APP_PORT 8080
+ENV APP_UID 500
 ENV APP_USER hub
 ENV APP_SUFFIX hub
 
@@ -16,22 +17,27 @@ ENV APP_HOME /var/lib/$APP_SUFFIX
 
 # preparing home (data) directory and user+group
 RUN mkdir $APP_HOME
-RUN groupadd -r $APP_USER
-RUN useradd -r -g $APP_USER -d $APP_HOME $APP_USER
+RUN useradd --system --user-group --uid $APP_UID --home $APP_HOME $APP_USER
 RUN chown -R $APP_USER:$APP_USER $APP_HOME
 
-# downloading and unpacking the distribution, removing bundled JVMs
 WORKDIR $APP_PREFIX
-RUN wget -q https://download.jetbrains.com/hub/$APP_VERSION/$APP_DISTFILE && \
+
+# downloading build dependencies,
+# downloading and unpacking the distribution, changing file permissions, removing bundled JVMs,
+# removing build dependencies
+RUN apk add -q --no-cache --virtual .build-deps wget unzip && \
+    wget -q https://download.jetbrains.com/hub/$APP_VERSION/$APP_DISTFILE && \
     unzip -q $APP_DISTFILE && \
     mv $APP_DISTNAME $APP_SUFFIX && \
     chown -R $APP_USER:$APP_USER $APP_DIR && \
     rm -rf $APP_DIR/internal/java && \
-    rm $APP_DISTFILE
+    rm $APP_DISTFILE && \
+    apk del .build-deps
 
 USER $APP_USER
 WORKDIR $APP_DIR
 
+# configuring the application
 RUN bin/hub.sh configure \
     --backups-dir $APP_HOME/backups \
     --data-dir    $APP_HOME/data \
