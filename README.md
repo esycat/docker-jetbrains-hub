@@ -4,7 +4,7 @@
 
 [Hub](https://jetbrains.com/hub/) is a system that provides centralized authentication, authorization; users, groups, permissions and project management across multiple installations of [JetBrains](https://jetbrains.com/) team collaboration tools.
 
-Version `2.5`, build `359` (released October 10, 2016).
+Version `2.5`, build `399` (released October 24, 2016).
 
 The image based on [Ubuntu 16.04 LTS](https://registry.hub.docker.com/u/esycat/java/) with [Oracle Java 8](https://registry.hub.docker.com/u/esycat/java/).
 
