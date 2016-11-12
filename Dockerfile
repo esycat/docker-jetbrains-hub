@@ -1,4 +1,4 @@
-FROM esycat:alpine-openjre
+FROM esycat/java:alpine-openjre
 
 MAINTAINER "Eugene Janusov" <esycat@gmail.com>
 
