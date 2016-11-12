@@ -26,26 +26,25 @@ RUN adduser -S -u $APP_UID -H -D $APP_USER && \
     mkdir $APP_HOME && \
     chown -R $APP_USER $APP_HOME && \
 
-# downloading build dependencies,
 # downloading and unpacking the distribution, changing file permissions, removing bundled JVMs,
-# removing build dependencies
+# removing downloads
+
     wget -q http://download.jetbrains.com/hub/$APP_VERSION/$APP_DISTFILE && \
-    unzip -q $APP_DISTFILE -x */internal/java/* && \
-    mv $APP_DISTNAME $APP_PREFIX/$APP_NAME && \
+    unzip -q $APP_DISTFILE -x */internal/java/* -d $APP_PREFIX && \
+    mv $APP_DISTNAME $APP_NAME && \
     chown -R $APP_USER $APP_DIR && \
     rm $APP_DISTFILE && \
 
-USER $APP_USER
-WORKDIR $APP_DIR
-
 # configuring the application
-RUN bin/hub.sh configure \
+    $APP_DIR/bin/hub.sh configure \
     --backups-dir $APP_HOME/backups \
     --data-dir    $APP_HOME/data \
     --logs-dir    $APP_HOME/log \
     --temp-dir    $APP_HOME/tmp \
     --listen-port $APP_PORT \
     --base-url    http://localhost/
+
+USER $APP_USER
 
 ENTRYPOINT ["bin/hub.sh"]
 CMD ["run"]
