@@ -26,9 +26,9 @@ ENV APP_DISTFILE ${APP_DISTNAME}.zip
 
 
 # preparing home (data) directory and user+group
-RUN mkdir $APP_HOME
-RUN useradd --system --user-group --uid $APP_UID --home $APP_HOME $APP_USER
-RUN chown -R $APP_USER:$APP_USER $APP_HOME
+RUN useradd --system --user-group --uid $APP_UID --home $APP_HOME $APP_USER && \
+    mkdir $APP_HOME && \
+    chown -R $APP_USER:$APP_USER $APP_HOME
 
 WORKDIR $APP_PREFIX
 
