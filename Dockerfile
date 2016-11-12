@@ -5,6 +5,11 @@ MAINTAINER "Eugene Janusov" <esycat@gmail.com>
 ARG APP_VERSION=2.5
 ARG APP_BUILD=399
 
+LABEL \
+    version="${APP_VERSION}.${APP_BUILD}" \
+    com.esyfur.jetbrains-hub-version="${APP_VERSION}.${APP_BUILD}" \
+    com.esyfur.vcs-url="https://github.com/esycat/docker-jetbrains-hub"
+
 ENV APP_NAME hub
 ENV APP_PORT 8080
 ENV APP_UID 500
