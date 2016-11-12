@@ -37,10 +37,9 @@ WORKDIR $APP_PREFIX
 # removing build dependencies
 RUN apk add -q --no-cache --virtual .build-deps wget unzip && \
     wget -q https://download.jetbrains.com/hub/$APP_VERSION/$APP_DISTFILE && \
-    unzip -q $APP_DISTFILE && \
+    unzip -q $APP_DISTFILE -x */internal/java/* && \
     mv $APP_DISTNAME $APP_NAME && \
     chown -R $APP_USER:$APP_USER $APP_DIR && \
-    rm -rf $APP_DIR/internal/java && \
     rm $APP_DISTFILE && \
     apk del .build-deps
 
