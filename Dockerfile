@@ -26,8 +26,6 @@ RUN adduser -S -u $APP_UID -H -D $APP_USER && \
     mkdir $APP_HOME && \
     chown -R $APP_USER $APP_HOME
 
-WORKDIR $APP_PREFIX
-
 # downloading build dependencies,
 # downloading and unpacking the distribution, changing file permissions, removing bundled JVMs,
 # removing build dependencies
