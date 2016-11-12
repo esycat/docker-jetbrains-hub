@@ -4,16 +4,17 @@ MAINTAINER "Eugene Janusov" <esycat@gmail.com>
 
 ENV APP_VERSION 2.5
 ENV APP_BUILD 399
+
+ENV APP_NAME hub
 ENV APP_PORT 8080
 ENV APP_UID 500
-ENV APP_USER hub
-ENV APP_SUFFIX hub
 
+ENV APP_USER $APP_NAME
 ENV APP_DISTNAME hub-ring-bundle-${APP_VERSION}.${APP_BUILD}
 ENV APP_DISTFILE ${APP_DISTNAME}.zip
 ENV APP_PREFIX /opt
-ENV APP_DIR $APP_PREFIX/$APP_SUFFIX
-ENV APP_HOME /var/lib/$APP_SUFFIX
+ENV APP_DIR $APP_PREFIX/$APP_NAME
+ENV APP_HOME /var/lib/$APP_NAME
 
 # preparing home (data) directory and user+group
 RUN mkdir $APP_HOME
@@ -28,7 +29,7 @@ WORKDIR $APP_PREFIX
 RUN apk add -q --no-cache --virtual .build-deps wget unzip && \
     wget -q https://download.jetbrains.com/hub/$APP_VERSION/$APP_DISTFILE && \
     unzip -q $APP_DISTFILE && \
-    mv $APP_DISTNAME $APP_SUFFIX && \
+    mv $APP_DISTNAME $APP_NAME && \
     chown -R $APP_USER:$APP_USER $APP_DIR && \
     rm -rf $APP_DIR/internal/java && \
     rm $APP_DISTFILE && \
