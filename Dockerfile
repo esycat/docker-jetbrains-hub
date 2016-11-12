@@ -2,8 +2,8 @@ FROM esycat:alpine-openjre
 
 MAINTAINER "Eugene Janusov" <esycat@gmail.com>
 
-ENV APP_VERSION 2.5
-ENV APP_BUILD 399
+ARG APP_VERSION=2.5
+ARG APP_BUILD=399
 
 ENV APP_NAME hub
 ENV APP_PORT 8080
