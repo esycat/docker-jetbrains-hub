@@ -13,7 +13,7 @@ LABEL \
 ENV APP_NAME=hub \
     APP_PORT=8080 \
     APP_UID=500 \
-    APP_PREFIX=/opt \
+    APP_PREFIX=/srv \
     APP_DISTNAME="hub-ring-bundle-${APP_VERSION}.${APP_BUILD}"
 
 ENV APP_USER=$APP_NAME \
