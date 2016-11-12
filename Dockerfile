@@ -31,7 +31,7 @@ RUN adduser -S -u $APP_UID -H -D $APP_USER && \
 
     wget -q http://download.jetbrains.com/hub/$APP_VERSION/$APP_DISTFILE && \
     unzip -q $APP_DISTFILE -x */internal/java/* -d $APP_PREFIX && \
-    mv $APP_DISTNAME $APP_NAME && \
+    mv $APP_PREFIX/$APP_DISTNAME/ $APP_DIR/ && \
     chown -R $APP_USER $APP_DIR && \
     rm $APP_DISTFILE && \
 
@@ -43,8 +43,6 @@ RUN adduser -S -u $APP_UID -H -D $APP_USER && \
     --temp-dir    $APP_HOME/tmp \
     --listen-port $APP_PORT \
     --base-url    http://localhost/
-
-USER $APP_USER
 
 ENTRYPOINT ["bin/hub.sh"]
 CMD ["run"]
