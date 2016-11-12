@@ -13,17 +13,13 @@ LABEL \
 ENV APP_NAME=hub \
     APP_PORT=8080 \
     APP_UID=500 \
-    APP_PREFIX=/opt
+    APP_PREFIX=/opt \
+    APP_DISTNAME="hub-ring-bundle-${APP_VERSION}.${APP_BUILD}"
 
-
-ENV APP_USER=$APP_NAME
-
-ENV APP_DIR=$APP_PREFIX/$APP_NAME \
+ENV APP_USER=$APP_NAME \
+    APP_DIR=$APP_PREFIX/$APP_NAME \
     APP_HOME=/var/lib/$APP_NAME \
-    APP_DISTNAME=hub-ring-bundle-${APP_VERSION}.${APP_BUILD}
-
-ENV APP_DISTFILE ${APP_DISTNAME}.zip
-
+    APP_DISTFILE="${APP_DISTNAME}.zip"
 
 # preparing home (data) directory and user+group
 RUN useradd --system --user-group --uid $APP_UID --home $APP_HOME $APP_USER && \
