@@ -44,6 +44,7 @@ RUN adduser -S -u $APP_UID -H -D $APP_USER && \
     --listen-port $APP_PORT \
     --base-url    http://localhost/
 
+WORKDIR $APP_DIR
 ENTRYPOINT ["bin/hub.sh"]
 CMD ["run"]
 EXPOSE $APP_PORT
