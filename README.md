@@ -1,3 +1,9 @@
+**Attention**:
+The image has been reworked to use Alpine instead of Ubuntu.
+As a consequence, the UID of the user that the application process runs under has changed from `999` (which was the
+default in Ubuntu) to `500`. Thereby, if you mount a host directory to persist data and configs, you will need to
+`chown -R 500:500` your local files before switching to the new version.
+
 # JetBrains Hub
 [![](https://images.microbadger.com/badges/image/esycat/jetbrains-hub.svg)](https://microbadger.com/images/esycat/jetbrains-hub "Get your own image badge on microbadger.com")
 [![](https://images.microbadger.com/badges/version/esycat/jetbrains-hub.svg)](https://microbadger.com/images/esycat/jetbrains-hub "Get your own version badge on microbadger.com")
@@ -6,7 +12,7 @@
 
 Version `2.5`, build `399` (released October 24, 2016).
 
-The image based on [Ubuntu 16.04 LTS](https://registry.hub.docker.com/u/esycat/java/) with [Oracle Java 8](https://registry.hub.docker.com/u/esycat/java/).
+The image is based on [Alpine 3.4 with OpenJDK JRE 8](https://hub.docker.com/r/esycat/java/).
 
 ## Persistent Data
 The Hub is configured to store all data (including backups, logs and temporary files) under `/var/lib/hub` directory,
