@@ -2,8 +2,7 @@ version: '2'
 
 services:
     hub:
-        build:
-            context: .
+        build: .
         image: esycat/jetbrains-hub
         container_name: jetbrains-hub
         restart: always
