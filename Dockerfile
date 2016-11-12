@@ -24,12 +24,12 @@ ENV APP_USER=$APP_NAME \
 # preparing home (data) directory and user+group
 RUN adduser -S -u $APP_UID -H -D $APP_USER && \
     mkdir $APP_HOME && \
-    chown -R $APP_USER $APP_HOME
+    chown -R $APP_USER $APP_HOME && \
 
 # downloading build dependencies,
 # downloading and unpacking the distribution, changing file permissions, removing bundled JVMs,
 # removing build dependencies
-RUN apk add -q --no-cache --virtual .build-deps wget unzip && \
+    apk add -q --no-cache --virtual .build-deps wget unzip && \
     wget -q https://download.jetbrains.com/hub/$APP_VERSION/$APP_DISTFILE && \
     unzip -q $APP_DISTFILE -x */internal/java/* && \
     mv $APP_DISTNAME $APP_NAME && \
