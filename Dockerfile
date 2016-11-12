@@ -22,9 +22,9 @@ ENV APP_USER=$APP_NAME \
     APP_DISTFILE="${APP_DISTNAME}.zip"
 
 # preparing home (data) directory and user+group
-RUN useradd --system --user-group --uid $APP_UID --home $APP_HOME $APP_USER && \
+RUN adduser -S -u $APP_UID -H -D $APP_USER && \
     mkdir $APP_HOME && \
-    chown -R $APP_USER:$APP_USER $APP_HOME
+    chown -R $APP_USER $APP_HOME
 
 WORKDIR $APP_PREFIX
 
