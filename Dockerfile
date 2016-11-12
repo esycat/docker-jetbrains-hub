@@ -10,16 +10,20 @@ LABEL \
     com.esyfur.jetbrains-hub-version="${APP_VERSION}.${APP_BUILD}" \
     com.esyfur.vcs-url="https://github.com/esycat/docker-jetbrains-hub"
 
-ENV APP_NAME hub
-ENV APP_PORT 8080
-ENV APP_UID 500
+ENV APP_NAME=hub \
+    APP_PORT=8080 \
+    APP_UID=500 \
+    APP_PREFIX=/opt
 
-ENV APP_USER $APP_NAME
-ENV APP_DISTNAME hub-ring-bundle-${APP_VERSION}.${APP_BUILD}
+
+ENV APP_USER=$APP_NAME
+
+ENV APP_DIR=$APP_PREFIX/$APP_NAME \
+    APP_HOME=/var/lib/$APP_NAME \
+    APP_DISTNAME=hub-ring-bundle-${APP_VERSION}.${APP_BUILD}
+
 ENV APP_DISTFILE ${APP_DISTNAME}.zip
-ENV APP_PREFIX /opt
-ENV APP_DIR $APP_PREFIX/$APP_NAME
-ENV APP_HOME /var/lib/$APP_NAME
+
 
 # preparing home (data) directory and user+group
 RUN mkdir $APP_HOME
