@@ -2,56 +2,52 @@ FROM esycat/java:alpine-openjre
 
 MAINTAINER "Eugene Janusov" <esycat@gmail.com>
 
-ARG APP_VERSION=2.5
-ARG APP_BUILD=399
+ARG APP_PREFIX=/srv
+ARG APP_PORT=8080
+ARG APP_HOME_PREFIX=/var/lib
+ARG APP_USER=hub
+ARG USER_UID=999
 
-LABEL \
-    version="${APP_VERSION}.${APP_BUILD}" \
-    com.esyfur.jetbrains-hub-version="${APP_VERSION}.${APP_BUILD}" \
-    com.esyfur.vcs-url="https://github.com/esycat/docker-jetbrains-hub"
+ENV APP_VERSION=2.5 \
+    APP_BUILD=399 \
+    APP_NAME=hub \
+    APP_SOURCE_TYPE=zip
 
-ENV APP_NAME=hub \
-    APP_PORT=8080 \
-    APP_UID=500 \
-    APP_PREFIX=/opt \
-    APP_DISTNAME="hub-ring-bundle-${APP_VERSION}.${APP_BUILD}"
+ENV APP_DIR=${APP_PREFIX}/${APP_NAME} \
+    APP_HOME=${APP_HOME_PREFIX}/${APP_NAME} \
+    APP_DISTNAME=hub-ring-bundle-${APP_VERSION}.${APP_BUILD}
 
-ENV APP_USER=$APP_NAME \
-    APP_DIR=$APP_PREFIX/$APP_NAME \
-    APP_HOME=/var/lib/$APP_NAME \
-    APP_DISTFILE="${APP_DISTNAME}.zip"
+ENV APP_DISTFILE=${APP_DISTNAME}.${APP_SOURCE_TYPE}
 
-# preparing home (data) directory and user+group
-RUN useradd --system --user-group --uid $APP_UID --home $APP_HOME $APP_USER && \
-    mkdir $APP_HOME && \
-    chown -R $APP_USER:$APP_USER $APP_HOME
+EXPOSE ${APP_PORT}
+VOLUME ["${APP_HOME}"]
+WORKDIR ${APP_PREFIX}
 
-WORKDIR $APP_PREFIX
+RUN apk -q --no-cache add --virtual .build-deps curl ca-certificates && \
+    delgroup ping && \
+    addgroup ${APP_USER} -g ${USER_UID} && \
+    adduser -S -u ${USER_UID} -H -D -G ${APP_USER} ${APP_USER} && \
+    chown -R ${APP_USER}:${APP_USER} ${APP_HOME} && \
 
-# downloading build dependencies,
-# downloading and unpacking the distribution, changing file permissions, removing bundled JVMs,
-# removing build dependencies
-RUN apk add -q --no-cache --virtual .build-deps wget unzip && \
-    wget -q https://download.jetbrains.com/hub/$APP_VERSION/$APP_DISTFILE && \
+    # downloading and unpacking the distribution, changing file permissions, removing bundled JVMs,
+    # removing downloads and dependent files
+
+    curl -sSL -o ${APP_DISTFILE} https://download.jetbrains.com/hub/${APP_VERSION}/${APP_DISTFILE} && \
     unzip -q $APP_DISTFILE -x */internal/java/* && \
-    mv $APP_DISTNAME $APP_NAME && \
-    chown -R $APP_USER:$APP_USER $APP_DIR && \
-    rm $APP_DISTFILE && \
-    apk del .build-deps
-
-USER $APP_USER
-WORKDIR $APP_DIR
+    mv ${APP_DISTNAME} ${APP_DIR} && \
+    chown -R ${APP_USER}:${APP_USER} ${APP_DIR} && \
+    apk -q del .build-deps && \
+    rm ${APP_DISTFILE} && \
 
 # configuring the application
-RUN bin/hub.sh configure \
-    --backups-dir $APP_HOME/backups \
-    --data-dir    $APP_HOME/data \
-    --logs-dir    $APP_HOME/log \
-    --temp-dir    $APP_HOME/tmp \
-    --listen-port $APP_PORT \
+    hub/bin/hub.sh configure \
+    --backups-dir ${APP_HOME}/backups \
+    --data-dir    ${APP_HOME}/data \
+    --logs-dir    ${APP_HOME}/log \
+    --temp-dir    ${APP_HOME}/tmp \
+    --listen-port ${APP_PORT} \
     --base-url    http://localhost/
 
-ENTRYPOINT ["bin/hub.sh"]
+USER ${APP_USER}
+ENTRYPOINT ["hub/bin/hub.sh"]
 CMD ["run"]
-EXPOSE $APP_PORT
-VOLUME ["$APP_HOME"]
