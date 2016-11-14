@@ -32,7 +32,8 @@ RUN apk -q --no-cache add --virtual .build-deps curl ca-certificates libarchive-
     bsdtar -xf ${APP_DISTFILE} --uname ${APP_USER} --gname ${APP_USER} --exclude */internal/java/* -s'|[^/]*/||' -C ${APP_DIR} && \
     apk -q del .build-deps && \
     rm ${APP_DISTFILE} && \
-
+    chown -R ${APP_USER}.${APP_USER} ${APP_HOME} && \
+    
     ${APP_DIR}/bin/hub.sh configure \
     --backups-dir ${APP_HOME}/backups \
     --data-dir    ${APP_HOME}/data \
@@ -45,4 +46,3 @@ USER ${APP_USER}
 WORKDIR ${APP_DIR}
 ENTRYPOINT ["bin/hub.sh"]
 CMD ["run"]
-
