@@ -3,7 +3,7 @@ FROM java:latest
 MAINTAINER "Seti" <seti@setadesign.net>
 
 ENV APP_VERSION 2.5
-ENV APP_BUILD $APP_VERSION.450
+ENV APP_BUILD $APP_VERSION.456
 ENV APP_HOME /data
 
 
