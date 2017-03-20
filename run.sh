@@ -3,7 +3,7 @@
 if [ ! -e $APP_HOME/conf ];
 then
 	echo "first run: starting configure"
-	mv /opt/hub/conf $APP_HOME/
+	cp -rp /opt/hub/conftemplate $APP_HOME/conf
 	ln -s $APP_HOME/conf /opt/hub/conf
 	bin/hub.sh configure \
 		--backups-dir $APP_HOME/backups \

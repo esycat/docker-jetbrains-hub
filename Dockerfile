@@ -16,7 +16,8 @@ RUN curl -k -L https://download.jetbrains.com/hub/$APP_VERSION/hub-ring-bundle-$
 	mkdir $APP_HOME && \
 	groupadd -r hub && \
 	useradd -r -g hub -u 1000 -d $APP_HOME hub && \
-	chown -R hub:hub $APP_HOME /opt/hub
+	chown -R hub:hub $APP_HOME /opt/hub && \
+	mv /opt/hub/conf /opt/hub/conftemplate
 
 WORKDIR /opt/hub
 ADD run.sh /opt/hub/
