@@ -3,7 +3,7 @@
 [Hub](https://jetbrains.com/hub/) is a system that provides centralized authentication, authorization; users, groups, permissions and project management across multiple installations of [JetBrains](https://jetbrains.com/) team collaboration tools.
 
 ## Info
-- Version 2017.1.4711
+- Version 2017.2.5178
 
 ## Usage
 
