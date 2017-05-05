@@ -3,7 +3,7 @@ FROM esycat/java:alpine-openjre
 MAINTAINER "Eugene Janusov" <esycat@gmail.com>
 
 ARG APP_VERSION=2017.1
-ARG APP_BUILD=4205
+ARG APP_BUILD=4524
 
 LABEL \
     version="${APP_VERSION}.${APP_BUILD}" \
