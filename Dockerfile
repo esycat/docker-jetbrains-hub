@@ -2,8 +2,8 @@ FROM esycat/java:alpine-openjre
 
 MAINTAINER "Eugene Janusov" <esycat@gmail.com>
 
-ARG APP_VERSION=2017.3
-ARG APP_BUILD=7461
+ARG APP_VERSION=2017.4
+ARG APP_BUILD=7979
 
 LABEL \
     version="${APP_VERSION}.${APP_BUILD}" \
