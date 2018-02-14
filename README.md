@@ -7,7 +7,7 @@ The image has been reworked to use Alpine instead of Ubuntu. As a consequence, t
 
 [Hub](https://jetbrains.com/hub/) is a system that provides centralized authentication, authorization; users, groups, permissions and project management across multiple installations of [JetBrains](https://jetbrains.com/) team collaboration tools.
 
-Version `2017.4`, build `8117` (released December 15, 2017).
+Version `2017.4`, build `8602` (released February 13, 2018).
 
 The image is based on [Alpine 3.4 with OpenJDK JRE 8](https://hub.docker.com/r/esycat/java/).
 
