@@ -14,7 +14,7 @@ ENV APP_NAME=hub \
     APP_PORT=8080 \
     APP_UID=500 \
     APP_PREFIX=/opt \
-    APP_DISTNAME="hub-ring-bundle-${APP_VERSION}.${APP_BUILD}"
+    APP_DISTNAME="hub-${APP_VERSION}.${APP_BUILD}"
 
 ENV APP_USER=$APP_NAME \
     APP_DIR=$APP_PREFIX/$APP_NAME \
@@ -32,7 +32,7 @@ WORKDIR $APP_PREFIX
 # downloading and unpacking the distribution, changing file permissions, removing bundled JVMs,
 # removing build dependencies
 RUN apk add -q --no-cache --virtual .build-deps wget unzip && \
-    wget -q https://download.jetbrains.com/hub/$APP_VERSION/$APP_DISTFILE && \
+    wget -q https://download.jetbrains.com/hub/$APP_DISTFILE && \
     unzip -q $APP_DISTFILE -x */internal/java/* && \
     mv $APP_DISTNAME $APP_NAME && \
     chown -R $APP_USER:$APP_USER $APP_DIR && \
